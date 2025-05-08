@@ -1,0 +1,4 @@
+# .NET Ignore
+[Oo]bj/
+[Bb]in/
+appsettings.Development.json
