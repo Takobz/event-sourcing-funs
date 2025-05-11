@@ -1,6 +1,7 @@
 namespace EventSourcing.POC.Domain.Entities 
 {
-    public record Entity(
-        Guid Id
-    );
+    public class Entity 
+    {
+        public Guid Id { get; protected set; }
+    }
 }
