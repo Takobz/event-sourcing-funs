@@ -3,7 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventSourcing.POC.Data.DbContexts 
 {
-    public class EventSourcingDbContext(DbContextOptions<EventSourcingDbContext> options) : DbContext(options)
+
+    public interface IEventSourcingDbContext
+    {
+        public DbSet<EventData> Events { get; set; }
+    }
+
+    public class EventSourcingDbContext(DbContextOptions<EventSourcingDbContext> options
+    ) : DbContext(options), IEventSourcingDbContext
     {
         public DbSet<EventData> Events { get; set; }
     }

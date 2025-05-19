@@ -1,9 +1,27 @@
+using EventSourcing.POC.Data.DbContexts;
+using EventSourcing.POC.Data.Options;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace EventSourcing.POC.Data.Extensions 
 {
-    public static class ServiceCollectionExtensions 
+    public static class ServiceCollectionExtensions
     {
-        /*
-        TODO: Add Services to DI container - API proj will use this to add into it's DI.
-        */
+        public static IServiceCollection AddEventSourcingPOCData(
+            this IServiceCollection services,
+            EventSourcingPOCPostgresDataOptions options)
+        {
+            var connectionString = PostgresConnectionString(options);
+            services.AddDbContext<EventSourcingDbContext>(options =>
+            {
+                options.UseNpgsql(connectionString);
+            });
+            services.AddTransient<IEventSourcingDbContext, EventSourcingDbContext>();
+
+            return services;
+        }
+
+        private static string PostgresConnectionString(EventSourcingPOCPostgresDataOptions postgresOptions)
+         => $"Host={postgresOptions.Host};Database={postgresOptions.Database};Username={postgresOptions.Username};Password={postgresOptions.Password}"; 
     }
 }
