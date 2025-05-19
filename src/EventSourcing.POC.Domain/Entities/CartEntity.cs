@@ -15,7 +15,7 @@ namespace EventSourcing.POC.Domain.Entities
         /// Call this to create a new cart.
         /// </summary>
         /// <param name="event">event with all the state data on creation</param>
-        public void Apply(CartCreationEvent @event)
+        public void Apply(CartCreatedEvent @event)
         {
             Id = @event.AggregateId;
             Name = @event.Name;

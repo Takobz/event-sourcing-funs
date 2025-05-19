@@ -16,7 +16,7 @@ namespace EventSourcing.POC.Domain.Entities
         /// <summary>
         /// Apply user state's on creation.
         /// </summary>
-        public void Apply(UserCreationEvent @event)
+        public void Apply(UserCreatedEvent @event)
         {
             Id = @event.AggregateId;
             Username = @event.Username;

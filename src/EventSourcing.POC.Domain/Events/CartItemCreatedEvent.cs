@@ -1,14 +1,13 @@
 using EventSourcing.POC.Domain.ValueObjects;
 
 namespace EventSourcing.POC.Domain.Events 
-{
-    public class CreateCartItemEvent(
+{    public class CartItemCreatedEvent(
         Guid aggregationId,
         string cartItemName,
         string cartItemDescription,
         double cartItemPrice,
         int cartItemQuantity
-    ) : Event(aggregationId, EventTypes.CartItemCreation) 
+    ) : Event(aggregationId, EventTypes.CartItemCreated) 
     {
         public string Name = cartItemName;
         public string Description = cartItemDescription;
