@@ -5,7 +5,7 @@ namespace EventSourcing.POC.Data.DataModels
     /// </summary>
     public class EventJSONData {}
     
-    public class UserCreationJSONData : EventJSONData
+    public class UserCreatedJSONData : EventJSONData
     {
         public string Username { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
