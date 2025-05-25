@@ -9,9 +9,9 @@ namespace EventSourcing.POC.Data.Extensions
     {
         public static IServiceCollection AddEventSourcingPOCData(
             this IServiceCollection services,
-            EventSourcingPOCPostgresDataOptions options)
+            Func<EventSourcingPOCPostgresDataOptions> options)
         {
-            var connectionString = PostgresConnectionString(options);
+            var connectionString = PostgresConnectionString(options());
             services.AddDbContext<EventSourcingDbContext>(options =>
             {
                 options.UseNpgsql(connectionString);

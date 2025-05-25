@@ -10,4 +10,10 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EventSourcing.POC.Domain\EventSourcing.POC.Domain.csproj" />
+    <ProjectReference Include="..\EventSourcing.POC.Data\EventSourcing.POC.Data.csproj" />
+    <ProjectReference Include="..\EventSourcing.POC.Infrastructure\EventSourcing.POC.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
