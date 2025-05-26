@@ -5,8 +5,9 @@ namespace EventSourcing.POC.Domain.Entities
     /// <summary>
     /// Current state of the Cart.
     /// </summary>
-    public class CartEntity : Entity 
+    public class CartEntity 
     {
+        public Guid Id { get; private set; }
         public string Name { get; private set; } = string.Empty;
         public string Description { get; private set; } = string.Empty;
         public IEnumerable<CartItemEntity> CartItems = [];

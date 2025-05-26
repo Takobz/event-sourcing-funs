@@ -1,4 +1,5 @@
 using EventSourcing.POC.Api.Models.DTOs.Requests;
+using EventSourcing.POC.Api.Models.DTOs.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventSourcing.POC.Api.Controllers
@@ -13,10 +14,18 @@ namespace EventSourcing.POC.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(CreateUserRequestDTO), StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateUser()
+        [ProducesResponseType(typeof(CreateUserResponseDTO), StatusCodes.Status201Created)]
+        public async Task<IActionResult> CreateUser(
+            [FromBody] CreateUserRequestDTO request
+        )
         {
-            return Ok();
+            var result = await Task.FromResult(new CreateUserResponseDTO(
+                Guid.NewGuid(),
+                string.Empty,
+                string.Empty
+            ));
+            
+            return Ok(result);
         }
     }   
 }

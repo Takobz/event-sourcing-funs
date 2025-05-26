@@ -4,7 +4,6 @@ namespace EventSourcing.POC.Data.DataModels
 {
     public class EventData 
     {
-        public const int EVENT_VERSION_1 = 1;
 
         [Column(name: "event_id")]
         public Guid EventId { get; set; } = Guid.NewGuid();
@@ -17,9 +16,6 @@ namespace EventSourcing.POC.Data.DataModels
 
         [Column(name: "event_type")]
         public string EventType { get; set; } = string.Empty;
-
-        [Column(name: "event_version")]
-        public int EventVersion = EVENT_VERSION_1;
         
         /// <summary>
         /// Stringyfied JSON representing extra props specific to an event.

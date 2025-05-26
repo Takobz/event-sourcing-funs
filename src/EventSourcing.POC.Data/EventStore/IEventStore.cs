@@ -2,6 +2,7 @@ using EventSourcing.POC.Data.DataModels;
 using EventSourcing.POC.Data.DbContexts;
 using EventSourcing.POC.Data.Helpers;
 using EventSourcing.POC.Domain.Events;
+using EventSourcing.POC.Domain.ValueObjects;
 
 namespace EventSourcing.POC.Data.EventStore 
 {
@@ -15,25 +16,25 @@ namespace EventSourcing.POC.Data.EventStore
         EventSourcingDbContext dbContext,
         IJSONDataSerializer dataSerializer) : IEventStore
     {
-        public IEnumerable<Event> GetEventsAsync(Guid aggregateId)
+        private readonly Dictionary<string, Type> _knownEvents = new()
         {
+            {EventTypes.UserCreated, typeof(UserCreatedJSONData)}
+        };
+        
+        public IEnumerable<Event> GetEventsAsync(Guid aggregateId)
+    {
             /*
-            This doesn't seem it will work what if an event is UserCreationEvent ?
+            TODO: test this madness.
             */
             return dbContext.Events.Where(@event => @event.AggregateId == aggregateId)
-                .Select(e => 
-                    new Event(
-                        e.AggregateId,
-                        e.EventId,
-                        e.EventTimeStamp,
-                        e.EventType
-                    )
-                ).AsEnumerable();
-        }
+                .OrderBy(@event => @event.EventTimeStamp)
+                .Select(e => dataSerializer.DeserializeDataEventToDomainEvent(e))
+                .AsEnumerable();
+    }
 
         public async Task SaveEventsAsync(IEnumerable<Event> events)
         {
-            foreach(var @event in events)
+            foreach (var @event in events)
             {
                 await dbContext.Events.AddAsync(new EventData
                 {
@@ -42,12 +43,12 @@ namespace EventSourcing.POC.Data.EventStore
                     /*
                     Not sure if this works but to check out tomz!
                     */
-                    Data = dataSerializer.SerializeToString(@event),
+                    EventJsonData = dataSerializer.SerializeToString(@event),
                     EventTimeStamp = @event.EventTimeStamp
                 });
             }
 
-            throw new NotImplementedException();
+            await dbContext.SaveChangesAsync();
         }
     }
 }

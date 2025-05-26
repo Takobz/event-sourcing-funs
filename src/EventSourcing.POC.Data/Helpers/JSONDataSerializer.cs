@@ -1,25 +1,58 @@
 using System.Text.Json;
 using EventSourcing.POC.Data.DataModels;
 using EventSourcing.POC.Domain.Events;
+using EventSourcing.POC.Domain.ValueObjects;
 
 namespace EventSourcing.POC.Data.Helpers;
 
 public interface IJSONDataSerializer
 {
-    T DeserializeToObject<T>(string eventType, string data) where T : EventJSONData;
-    string SerializeToString<T>(T @object) where T: Event;
+    string SerializeToString<T>(T @object) where T : Event;
+    public Event DeserializeDataEventToDomainEvent(DataModels.EventData eventData); 
 }
 
 public class JSONDataSerializer : IJSONDataSerializer
 {
-    public T DeserializeToObject<T>(string eventType, string data) where T : EventJSONData
+    public string SerializeToString<T>(T @object) where T : Event
     {
-        return JsonSerializer.Deserialize<T>(data) ??
-            throw new InvalidOperationException($"Failed to deserialize data: {data} to event type: {eventType}");
+        EventJSONData eventJSONData = @object.EventType switch
+        {
+            EventTypes.UserCreated => new UserCreatedJSONData(
+                                (@object as UserCreatedEvent)?.Username ?? string.Empty,
+                                (@object as UserCreatedEvent)?.Email ?? string.Empty
+                            ),
+            _ => throw new Exception("Yow yeses this is a lot code haha"),
+        };
+        return JsonSerializer.Serialize(eventJSONData);
     }
 
-    public string SerializeToString<T>(T @object) where T : Event 
+    public Event DeserializeDataEventToDomainEvent(
+        DataModels.EventData eventData
+    )
     {
-        return JsonSerializer.Serialize(@object);
+        var @event = DeserializeByEventType(eventData.EventType, eventData.EventJsonData) ??
+            throw new InvalidOperationException($"Couldn't deserialize event data: {eventData} from even store.");
+
+        @event.Reconstruct(
+            eventData.AggregateId,
+            eventData.EventId,
+            eventData.EventTimeStamp,
+            eventData.EventType
+        );
+
+        return @event;
+    }
+
+    private static Event? DeserializeByEventType(
+        string eventType,
+        string data
+    )
+    {
+        return eventType switch
+        {
+            EventTypes.UserCreated => JsonSerializer.Deserialize<UserCreatedEvent>(data),
+            EventTypes.CartCreated => JsonSerializer.Deserialize<CartCreatedEvent>(data),
+            _ => throw new InvalidOperationException($"Event type: {eventType} not supported."),
+        };
     }
 }

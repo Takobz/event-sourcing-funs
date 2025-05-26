@@ -14,14 +14,14 @@ namespace EventSourcing.POC.Domain.Events
         /// <summary>
         /// Use this when reading events so we can read all the data
         /// </summary>
-        public Event(
+        public void Reconstruct(
             Guid aggregrateId,
             Guid eventId,
             DateTimeOffset eventTimeStamp,
             string eventType
         )
         {
-            AggregateId = aggregrateId;
+           AggregateId = aggregrateId;
             EventId = eventId;
             EventTimeStamp = eventTimeStamp;
             EventType = eventType;
