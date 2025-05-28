@@ -12,3 +12,8 @@ This means I can travel back in history and see the full aduit of how the data c
 ### Some Concepts.
 
 - `Event` - An action at a given time that caused state to change.
+
+# How Events Are Stored.
+As far as I can tell events need to be stored in an event store. I never store the entities themselves but events that make up the event.  
+I can have a projection database if I want (where I can have some structure that represents the entity's current state).  
+

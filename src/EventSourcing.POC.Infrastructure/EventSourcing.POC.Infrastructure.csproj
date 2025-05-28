@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EventSourcing.POC.Domain\EventSourcing.POC.Domain.csproj" />
+    <ProjectReference Include="..\EventSourcing.POC.Data\EventSourcing.POC.Data.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

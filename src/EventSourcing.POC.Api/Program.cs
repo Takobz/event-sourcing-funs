@@ -1,9 +1,14 @@
 using EventSourcing.POC.Data.Extensions;
 using EventSourcing.POC.Data.Options;
+using EventSourcing.POC.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Infrastructure Layer Services
+builder.Services.AddRepositories();
+builder.Services.AddInfrastructureHelpers();
+
+// Data Layer Services
 builder.Services.AddEventSourcingPOCData(() =>
 {
     var options = builder.Configuration.GetSection(EventSourcingPOCPostgresDataOptions.SectionName)

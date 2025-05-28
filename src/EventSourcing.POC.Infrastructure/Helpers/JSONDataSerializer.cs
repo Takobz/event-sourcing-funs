@@ -3,12 +3,12 @@ using EventSourcing.POC.Data.DataModels;
 using EventSourcing.POC.Domain.Events;
 using EventSourcing.POC.Domain.ValueObjects;
 
-namespace EventSourcing.POC.Data.Helpers;
+namespace EventSourcing.POC.Infrastructure.Helpers;
 
 public interface IJSONDataSerializer
 {
     string SerializeToString<T>(T @object) where T : Event;
-    public Event DeserializeDataEventToDomainEvent(DataModels.EventData eventData); 
+    public Event DeserializeDataEventToDomainEvent(EventData eventData); 
 }
 
 public class JSONDataSerializer : IJSONDataSerializer
@@ -27,7 +27,7 @@ public class JSONDataSerializer : IJSONDataSerializer
     }
 
     public Event DeserializeDataEventToDomainEvent(
-        DataModels.EventData eventData
+        EventData eventData
     )
     {
         var @event = DeserializeByEventType(eventData.EventType, eventData.EventJsonData) ??
