@@ -28,12 +28,5 @@ namespace EventSourcing.POC.Infrastructure.Repositories
             }
             return user;
         }
-
-        public Task<UserEntity> CreateUserAsync(string username, string email)
-        {
-            // This method should probably be removed from the interface
-            // as creation should be handled through domain methods
-            throw new NotImplementedException("Use UserEntity.CreateUser() domain method instead");
-        }
     }
 }

@@ -17,7 +17,6 @@ namespace EventSourcing.POC.Domain.Entities
 
 
         public UserEntity(
-            Guid Id,
             string username,
             string email
         )
@@ -43,18 +42,20 @@ namespace EventSourcing.POC.Domain.Entities
         /// <param name="username">Username for user being created</param>
         /// <param name="email">Email for user being created</param>
         /// <returns></returns>
-        public UserEntity CreateUser(
+        public static UserEntity CreateUser(
             string username,
             string email
         )
         {
             var user = new UserEntity(
-                Guid.NewGuid(),
                 username,
                 email
-            );
+            )
+            {
+                Id = Guid.NewGuid()    
+            };
 
-            AddEvent(new UserCreatedEvent(Guid.NewGuid(), user.Username, user.Email));
+            user.AddEvent(new UserCreatedEvent(user.Id, user.Username, user.Email));
 
             return user;
         }
@@ -65,10 +66,11 @@ namespace EventSourcing.POC.Domain.Entities
             if (@event.GetType() == typeof(UserCreatedEvent))
             {
                 var userCreatedEvent = (UserCreatedEvent)@event;
-                this.Username = userCreatedEvent.Username;
-                this.Email = userCreatedEvent.Email;
+                Username = userCreatedEvent.Username;
+                Email = userCreatedEvent.Email;
             }
-            throw new NotImplementedException();
+
+            throw new NotImplementedException("Unknown event type: {@event.GetType()} can't be applied");
         }
     }
 }
