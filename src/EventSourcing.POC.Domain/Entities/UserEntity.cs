@@ -1,4 +1,5 @@
 using EventSourcing.POC.Domain.Events;
+using EventSourcing.POC.Domain.ValueObjects;
 
 namespace EventSourcing.POC.Domain.Entities
 {
@@ -63,7 +64,7 @@ namespace EventSourcing.POC.Domain.Entities
         protected override void ApplyEvent(Event @event)
         {
             Id = @event.AggregateId;
-            if (@event.GetType() == typeof(UserCreatedEvent))
+            if (@event.EventType == EventTypes.UserCreated)
             {
                 var userCreatedEvent = (UserCreatedEvent)@event;
                 Username = userCreatedEvent.Username;

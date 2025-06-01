@@ -1,6 +1,7 @@
 using EventSourcing.POC.Api.Models.DTOs.Requests;
 using EventSourcing.POC.Api.Models.DTOs.Responses;
 using EventSourcing.POC.Api.Models.ServiceModels.Commands;
+using EventSourcing.POC.Api.Models.ServiceModels.Queries;
 using EventSourcing.POC.Domain.Entities;
 
 namespace EventSourcing.POC.Api.Mappers
@@ -30,6 +31,15 @@ namespace EventSourcing.POC.Api.Mappers
                 result.UserId,
                 result.Username,
                 result.Email
+            );
+        }
+
+        public static GetUserQueryResult EntityToQueryResult(this UserEntity user)
+        {
+            return new GetUserQueryResult(
+                user.Id,
+                user.Username,
+                user.Email
             );
         }
     }    

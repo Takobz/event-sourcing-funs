@@ -37,6 +37,8 @@ public class JSONDataSerializer : IJSONDataSerializer
         EventData eventData
     )
     {
+        //This is deserializing eventdata not the whole event.
+        //fix this...
         var @event = DeserializeByEventType(eventData.EventType, eventData.EventJsonData) ??
             throw new InvalidOperationException($"Couldn't deserialize event data: {eventData} from even store.");
 

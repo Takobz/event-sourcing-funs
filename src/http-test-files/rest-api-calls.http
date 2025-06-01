@@ -1,6 +1,7 @@
 @Api_HostAddress = http://localhost:5219
 
 ### Create User V1 using path
+# @name createUserV1
 POST {{Api_HostAddress}}/api/v1/user
 Content-Type: application/json
 
@@ -8,6 +9,16 @@ Content-Type: application/json
     "username": "John Doe",
     "email": "john.doe@example.com"
 }
+
+###
+
+@userId = {{createUserV1.response.body.$.user_id}}
+
+## Get User V1 By Id
+# @name getUserV1ById
+GET {{Api_HostAddress}}/api/v1/user/{{userId}}
+
+### 
 
 ### Create User V1 using query string
 GET {{Api_HostAddress}}/api/user/?version=1.0

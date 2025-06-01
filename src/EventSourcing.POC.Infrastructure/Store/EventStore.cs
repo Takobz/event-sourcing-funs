@@ -35,9 +35,6 @@ namespace EventSourcing.POC.Infrastructure.Store
                 {
                     AggregateId = @event.AggregateId,
                     EventType = @event.EventType,
-                    /*
-                    Not sure if this works but to check out tomz!
-                    */
                     EventJsonData = dataSerializer.SerializeToString(@event),
                     EventTimeStamp = @event.EventTimeStamp
                 });
