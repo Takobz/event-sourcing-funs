@@ -1,6 +1,31 @@
-@EventSourcing.POC.Api_HostAddress = http://localhost:5219
+@Api_HostAddress = http://localhost:5219
 
-GET {{EventSourcing.POC.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### Create User V1 using path
+POST {{Api_HostAddress}}/api/v1/user
+Content-Type: application/json
+
+{
+    "username": "John Doe",
+    "email": "john.doe@example.com"
+}
+
+### Create User V1 using query string
+GET {{Api_HostAddress}}/api/user/?version=1.0
+Content-Type: application/json
+
+{
+    "username": "John Doe",
+    "email": "John.Doe@example.com"
+}
+
+### Create User V1 using header
+POST {{Api_HostAddress}}/api/user
+Content-Type: application/json
+X-Version: 1.0
+
+{
+    "username": "John Doe",
+    "email": "John.Doe@example.com"
+}
 
 ###

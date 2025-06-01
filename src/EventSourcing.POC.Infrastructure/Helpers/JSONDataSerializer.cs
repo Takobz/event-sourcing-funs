@@ -13,6 +13,12 @@ public interface IJSONDataSerializer
 
 public class JSONDataSerializer : IJSONDataSerializer
 {
+    private readonly JsonSerializerOptions _options = new()
+    {
+        WriteIndented = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    };
+
     public string SerializeToString<T>(T @object) where T : Event
     {
         EventJSONData eventJSONData = @object.EventType switch
@@ -23,7 +29,8 @@ public class JSONDataSerializer : IJSONDataSerializer
                             ),
             _ => throw new Exception("Yow yeses this is a lot code haha"),
         };
-        return JsonSerializer.Serialize(eventJSONData);
+
+        return JsonSerializer.Serialize(eventJSONData, _options);
     }
 
     public Event DeserializeDataEventToDomainEvent(

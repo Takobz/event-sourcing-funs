@@ -3,11 +3,13 @@ using EventSourcing.POC.Api.Models.DTOs.Requests;
 using EventSourcing.POC.Api.Models.DTOs.Responses;
 using EventSourcing.POC.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Asp.Versioning;
 
-namespace EventSourcing.POC.Api.Controllers
+namespace EventSourcing.POC.Api.Controllers.V1
 {
     [ApiController]
-    [Route("[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class UserController(
         IUserService userService
     ) : ControllerBase

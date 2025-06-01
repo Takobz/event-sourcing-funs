@@ -1,11 +1,14 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventSourcing.POC.Data.DataModels 
 {
-    public class EventData 
+    [Table("events")]
+    public class EventData
     {
 
         [Column(name: "event_id")]
+        [Key]
         public Guid EventId { get; set; } = Guid.NewGuid();
 
         [Column(name: "aggregate_id")]
@@ -16,7 +19,7 @@ namespace EventSourcing.POC.Data.DataModels
 
         [Column(name: "event_type")]
         public string EventType { get; set; } = string.Empty;
-        
+
         /// <summary>
         /// Stringyfied JSON representing extra props specific to an event.
         /// </summary>
