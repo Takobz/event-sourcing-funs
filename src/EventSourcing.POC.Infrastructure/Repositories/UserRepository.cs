@@ -24,7 +24,7 @@ namespace EventSourcing.POC.Infrastructure.Repositories
             if (uncommittedEvents.Any())
             {
                 await _eventStore.SaveEventsAsync(uncommittedEvents);
-                // Clear events after saving (you'll need to implement this in AggregateRoot)
+                user.ClearUncommittedEvents();
             }
             return user;
         }

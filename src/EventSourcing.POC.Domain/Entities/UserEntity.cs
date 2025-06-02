@@ -70,8 +70,10 @@ namespace EventSourcing.POC.Domain.Entities
                 Username = userCreatedEvent.Username;
                 Email = userCreatedEvent.Email;
             }
-
-            throw new NotImplementedException("Unknown event type: {@event.GetType()} can't be applied");
+            else
+            {
+                throw new InvalidOperationException($"Unknown event type: {@event.GetType()} can't be applied");
+            }
         }
     }
 }

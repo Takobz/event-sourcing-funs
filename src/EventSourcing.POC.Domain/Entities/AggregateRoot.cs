@@ -46,6 +46,14 @@ namespace EventSourcing.POC.Domain.Entities
         }
 
         /// <summary>
+        /// Call this after you have saved uncomitted events into the event store.
+        /// </summary>
+        public void ClearUncommittedEvents()
+        {
+            _uncommittedEvents.Clear();
+        }
+
+        /// <summary>
         /// Aggregate will implement this for it's events. 
         /// </summary>
         /// <param name="event">Event to be applied to mutate state</param>

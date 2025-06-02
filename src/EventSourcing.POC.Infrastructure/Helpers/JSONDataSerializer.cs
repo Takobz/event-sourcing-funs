@@ -39,28 +39,33 @@ public class JSONDataSerializer : IJSONDataSerializer
     {
         //This is deserializing eventdata not the whole event.
         //fix this...
-        var @event = DeserializeByEventType(eventData.EventType, eventData.EventJsonData) ??
+        var eventJSONData = DeserializeByEventType(eventData.EventType, eventData.EventJsonData) ??
             throw new InvalidOperationException($"Couldn't deserialize event data: {eventData} from even store.");
 
-        @event.Reconstruct(
-            eventData.AggregateId,
-            eventData.EventId,
-            eventData.EventTimeStamp,
-            eventData.EventType
-        );
+        return eventData.EventType switch
+        {
+            EventTypes.UserCreated => new UserCreatedEvent()
+                .Reconstruct(
+                    aggregateId: eventData.AggregateId,
+                    eventId: eventData.EventId,
+                    username: (eventJSONData as UserCreatedJSONData)?.Username ?? string.Empty,
+                    email: (eventJSONData as UserCreatedJSONData)?.Email ?? string.Empty,
+                    eventTimeStamp: eventData.EventTimeStamp
+                ),
 
-        return @event;
+            _ => throw new InvalidOperationException($"Event type: {eventData.EventType} with data: {eventData.EventJsonData} is unknown")
+        };
     }
 
-    private static Event? DeserializeByEventType(
+    private static EventJSONData? DeserializeByEventType(
         string eventType,
         string data
     )
     {
         return eventType switch
         {
-            EventTypes.UserCreated => JsonSerializer.Deserialize<UserCreatedEvent>(data),
-            EventTypes.CartCreated => JsonSerializer.Deserialize<CartCreatedEvent>(data),
+            EventTypes.UserCreated => JsonSerializer.Deserialize<UserCreatedJSONData>(data),
+            EventTypes.CartCreated => JsonSerializer.Deserialize<CartCreatedJSONData>(data),
             _ => throw new InvalidOperationException($"Event type: {eventType} not supported."),
         };
     }

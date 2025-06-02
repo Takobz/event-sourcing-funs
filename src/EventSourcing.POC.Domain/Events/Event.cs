@@ -21,15 +21,15 @@ namespace EventSourcing.POC.Domain.Events
             string eventType
         )
         {
-           AggregateId = aggregrateId;
+            AggregateId = aggregrateId;
             EventId = eventId;
             EventTimeStamp = eventTimeStamp;
             EventType = eventType;
         }
 
-        public Guid EventId { get; private set; } = Guid.NewGuid();
-        public Guid AggregateId { get; private set; }
-        public DateTimeOffset EventTimeStamp { get; private set; } = DateTimeOffset.UtcNow;
-        public string EventType { get; private set; }
+        public Guid EventId { get; internal set; } = Guid.NewGuid();
+        public Guid AggregateId { get; internal set; }
+        public DateTimeOffset EventTimeStamp { get; internal set; } = DateTimeOffset.UtcNow;
+        public string EventType { get; internal set; }
     }
 }
