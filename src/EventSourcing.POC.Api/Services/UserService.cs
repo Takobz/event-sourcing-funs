@@ -10,6 +10,7 @@ namespace EventSourcing.POC.Api.Services
     {
         Task<CreateUserCommandResult> CreateUserAsync(CreateUserCommand command);
         Task<GetUserQueryResult?> GetUserAsync(GetUserQuery query);
+        Task<UpdateUserCommandResult> UpdateUserAsync(UpdateUserCommand command);
     }
 
     public class UserService(IUserRepository userRepository) : IUserService
@@ -26,6 +27,12 @@ namespace EventSourcing.POC.Api.Services
             UserEntity? user = await userRepository.GetUserAsync(query.UserId);
             if (user == null) return default;
             return user.EntityToQueryResult();
+        }
+
+        public Task<UpdateUserCommandResult> UpdateUserAsync(UpdateUserCommand command)
+        {
+            
+            throw new NotImplementedException();
         }
     }    
 }

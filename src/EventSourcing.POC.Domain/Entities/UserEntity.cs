@@ -61,6 +61,19 @@ namespace EventSourcing.POC.Domain.Entities
             return user;
         }
 
+        // public static UserEntity UpdateUser(
+        //     Guid userId,
+        //     string email
+        // )
+        // {
+        //     var user = new UserEntity()
+        //     {
+        //         Id = userId,
+        //     };
+
+        //     user.AddEvent(new UpdateUserEvent());
+        // }
+
         protected override void ApplyEvent(Event @event)
         {
             Id = @event.AggregateId;

@@ -39,5 +39,21 @@ namespace EventSourcing.POC.Api.Controllers.V1
 
             return Ok(user);
         }
+
+        [HttpPut("{userId}")]
+        [ProducesResponseType(typeof(UpdateUserResponseDTO), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateUser(
+            Guid userId,
+            [FromBody] UpdateUserRequestDTO request
+        )
+        {
+            
+
+            return Ok(new UpdateUserResponseDTO(
+                Guid.NewGuid(),
+                string.Empty,
+                string.Empty
+            ));
+        }
     }   
 }
