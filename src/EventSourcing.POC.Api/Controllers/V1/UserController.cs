@@ -48,7 +48,6 @@ namespace EventSourcing.POC.Api.Controllers.V1
         )
         {
             
-
             return Ok(new UpdateUserResponseDTO(
                 Guid.NewGuid(),
                 string.Empty,

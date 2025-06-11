@@ -25,9 +25,9 @@ namespace EventSourcing.POC.Domain.Events
         /// <summary>
         /// Only use this constructor for reconstruct i.e: new UserCreatedEvent().Reconstruct([...])
         /// </summary>
-        #pragma warning disable CS8618
+#pragma warning disable CS8618
         public UserCreatedEvent() : base(Guid.NewGuid(), EventTypes.UserCreated) { }
-        #pragma warning restore CS8618
+#pragma warning restore CS8618
 
         public UserCreatedEvent Reconstruct(
             Guid aggregateId,

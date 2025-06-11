@@ -1,6 +1,6 @@
 namespace EventSourcing.POC.Domain.Events  
 {
-    public class Event
+    public abstract class Event
     {
         /// <summary>
         /// Use for new events
@@ -11,21 +11,14 @@ namespace EventSourcing.POC.Domain.Events
             EventType = eventType;
         }
 
-        /// <summary>
-        /// Use this when reading events so we can read all the data
-        /// </summary>
-        public void Reconstruct(
-            Guid aggregrateId,
-            Guid eventId,
-            DateTimeOffset eventTimeStamp,
-            string eventType
-        )
-        {
-            AggregateId = aggregrateId;
-            EventId = eventId;
-            EventTimeStamp = eventTimeStamp;
-            EventType = eventType;
-        }
+        //Think abt this
+        // public abstract Event Reconstruct(
+        //     Guid aggregrateId,
+        //     Guid eventId,
+        //     DateTimeOffset eventTimeStamp,
+        //     string eventType,
+        //     params object[] eventData
+        // );
 
         public Guid EventId { get; internal set; } = Guid.NewGuid();
         public Guid AggregateId { get; internal set; }
